@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const mongoose  = require('mongoose');
 const { Mongo_DB_URL } = require('./config/db.config');
 const userroutes = require('./routes/userroutes');
+const questionroutes = require('./routes/question.routes');
+const answerroutes = require('./routes/answer.route');
 
 const app = express();
 
@@ -19,6 +21,8 @@ app.get('/ping', (req, res) => {
 });
 
 app.use('/queryconnect', userroutes);
+app.use('/queryconnect', questionroutes);
+app.use('/queryconnect', answerroutes);
 
 async function ConnectToDb(){
 

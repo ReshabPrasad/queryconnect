@@ -1,7 +1,5 @@
 const usermodel = require("../models/user.model");
-const bcrypt = require ('bcrypt')
-
-
+const bcrypt = require('bcrypt');
 
 const CreateUser = async(data) => { 
     const response  = {};
@@ -41,7 +39,45 @@ const ValidateUser  = async(data) =>{
         return response ; 
     }
 }
+
+const getUserByEmail = async (data) => {
+    const response = {};
+    try {
+        const user = await usermodel.findOne({ email: data.email });
+        if (!user) {
+            response.error = "Invalid email";
+            return response;
+        }
+        response.user = user;
+        return response;
+    } catch (error) {
+        console.log("Error", error);
+        response.error = error.message;
+        return response;
+    }
+};
+
+const getUserById = async (data) => {
+    const response = {};
+    try {
+        const user = await usermodel.findOne({ _id: data.user_id });
+        console.log(user, " hi");
+        if (!user) {
+            response.error = "Invalid userId";
+            return response;
+        }
+        response.user = user;
+        return response;
+    } catch (error) {
+        console.log("Error", error);
+        response.error = error.message;
+        return response;
+    }
+};
+
 module.exports = {
     CreateUser,
-    ValidateUser
-}
+    ValidateUser,
+    getUserByEmail,
+    getUserById
+};
